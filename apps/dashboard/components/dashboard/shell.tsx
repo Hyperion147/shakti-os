@@ -20,6 +20,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
 import { ShaktiLogo } from "@/components/shakti-logo";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -408,6 +409,7 @@ export function OperatorShell({ children }: { children: ReactNode }) {
               <Search className="size-4" aria-hidden />
             </Button>
             <RealtimeStatus incidentState={incidentState} eventState={eventState} compact />
+            <ModeToggle />
             <Link href="/timeline" className="hidden rounded-lg p-2 text-muted-foreground hover:bg-muted sm:inline-flex" aria-label="Open activity timeline">
               <Bell className="size-4" aria-hidden />
             </Link>

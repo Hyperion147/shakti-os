@@ -30,7 +30,7 @@ All operational routes verify `/me` and operator capability before mounting thei
 
 The shared snapshot holds up to **200 incidents and 200 events**. Global timeline/action views use the latest **15 incidents**; evidence and timeline requests are also bounded. Counts and exports derived from these views are not a full database census. The public overview API has database-wide counts, but the landing page does not consume it.
 
-The map initially frames Kolkata and Sonarpur. It preserves API/zone coordinates and does not invent markers for missing locations or reset the camera on every update. Real map tiles do not turn illustrative seed coordinates into verified venue data.
+The map initially frames the Ranchi college circuit. It preserves API/zone coordinates and does not invent markers for missing locations or reset the camera on every update. Real map tiles do not turn illustrative seed coordinates into verified venue data.
 
 ## Citizen experience
 

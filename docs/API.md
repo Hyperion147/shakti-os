@@ -101,16 +101,16 @@ Event fields:
 | `incident_id` | Nullable server-owned link assigned by correlation |
 | `reporter_id` | Nullable server-owned verified citizen identity; cleared for machine events |
 
-Citizen example, requiring a bearer token and the corresponding registered venue/zone (shown here from the optional Sonarpur seed):
+Citizen example, requiring a bearer token and the corresponding registered venue/zone (shown here from the optional Ranchi seed):
 
 ```json
 {
   "type": "citizen_report",
   "source": "citizen_app",
-  "location": "hackspire26_sonarpur_registration",
+  "location": "hackspire26_ranchi_registration",
   "confidence": 0.9,
   "payload": {
-    "venue_event_id": "venue-hackspire26-sonarpur",
+    "venue_event_id": "venue-hackspire26-ranchi",
     "location_label": "Registration & Entry",
     "category": "crowd",
     "description": "Demo observation: queue is blocking the entrance.",

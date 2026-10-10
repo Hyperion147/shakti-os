@@ -28,38 +28,38 @@ A fresh complete v2 seed plans:
 
 | Record | Count |
 | --- | ---: |
-| Venues | 4 |
-| Canonical zones | 14 |
-| Incidents | 14 |
-| Events | 98 |
-| Timeline entries | 113 |
+| Venues | 3 |
+| Canonical zones | 11 |
+| Incidents | 11 |
+| Events | 77 |
+| Timeline entries | 87 |
 
 IDs are deterministic UUID5 values. Events use `seed_*` sources and payload markers `seed_batch=shaktios-seed-v2`, `is_seeded=true`. Seeded timeline decisions explicitly state that no real operator action or dispatch occurred. Counts are **fixture counts**, not the totals of an existing database.
 
 Coordinates are illustrative, and venue helplines are not invented. Use reviewed venue/zone registration before real operations. There is no venue-admin editor in the MVP.
 
-## Scoped Hackspire26 / Sonarpur scenario
+## Scoped Hackspire26 / Ranchi scenario
 
-The [official HackSpire'26 guide](https://www.hackspire.tech/guide) identifies FIEM Campus, Sonarpur. These nodes are illustrative demo locations near that area, **not an official campus plan or live conditions**.
+The Ranchi college-circuit nodes are illustrative demo locations across Ranchi campus areas (Morabadi, BIT Mesra side, St. Xavier's area and the station shuttle point), **not an official campus plan or live conditions**.
 
 ```bash
-services/api/.venv/bin/python scripts/seed_supabase.py --venue venue-hackspire26-sonarpur --dry-run
-services/api/.venv/bin/python scripts/seed_supabase.py --venue venue-hackspire26-sonarpur --apply
+services/api/.venv/bin/python scripts/seed_supabase.py --venue venue-hackspire26-ranchi --dry-run
+services/api/.venv/bin/python scripts/seed_supabase.py --venue venue-hackspire26-ranchi --apply
 ```
 
 A fresh scoped application plans **1 venue, 5 zones, 5 active incidents, 35 events and 39 timeline entries**. The same skip-existing rules apply.
 
 | Node | Latitude | Longitude | Initial state | Initial risk / severity |
 | --- | --- | --- | --- | --- |
-| Registration & Entry | 22.4498 | 88.4205 | ASSESSING | 81.8% / HIGH |
-| Hacking Arena | 22.4506 | 88.4220 | DETECTED | 61.1% / MEDIUM |
-| Judging & Demo Stage | 22.4515 | 88.4235 | RESPONDING | 76.4% / HIGH |
-| Food & Rest Zone | 22.4507 | 88.4188 | ASSESSING | 35.9% / LOW |
-| Shuttle Arrival | 22.4484 | 88.4232 | DETECTED | 67.4% / MEDIUM |
+| Registration & Entry | 23.3852 | 85.3180 | ASSESSING | 81.8% / HIGH |
+| Hacking Arena | 23.3860 | 85.3195 | DETECTED | 61.1% / MEDIUM |
+| Judging & Demo Stage | 23.4120 | 85.4250 | RESPONDING | 76.4% / HIGH |
+| Food & Rest Zone | 23.3710 | 85.3265 | ASSESSING | 35.9% / LOW |
+| Campus Shuttle | 23.3475 | 85.3353 | DETECTED | 67.4% / MEDIUM |
 
-Mobile venue name: **Hackspire26 — Sonarpur Seed Scenario**. Manual join ID: `venue-hackspire26-sonarpur`. The registration zone used in the demo is `hackspire26_sonarpur_registration`.
+Mobile venue name: **Hackspire26 — Ranchi Seed Scenario**. Manual join ID: `venue-hackspire26-ranchi`. The registration zone used in the demo is `hackspire26_ranchi_registration`.
 
-After SQL seeding, refresh `/dashboard` or `/map`: direct SQL writes do not emit in-process WebSocket updates. The initial regional map is centered at `22.525, 88.39`, zoom `11`, framing Kolkata and Sonarpur. Zoom near `22.450, 88.421` to distinguish nearby Sonarpur nodes. Incoming updates do not reset a manually chosen view.
+After SQL seeding, refresh `/dashboard` or `/map`: direct SQL writes do not emit in-process WebSocket updates. The initial regional map is centered at `23.381, 85.345`, zoom `11`, framing the Ranchi college circuit. Zoom near `23.386, 85.319` to distinguish the nearby Morabadi nodes. Incoming updates do not reset a manually chosen view.
 
 Seed incident timestamps are deliberately in the past. A new citizen report normally starts a fresh incident rather than joining an old seed incident. To demonstrate fusion, use the fresh matching-zone inputs in [DEMO.md](DEMO.md), not a rerun of the seed.
 

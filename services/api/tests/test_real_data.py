@@ -122,9 +122,9 @@ def test_seed_is_atomic_repeatable_and_never_invents_a_citizen(client):
     spec.loader.exec_module(module)
     with SessionLocal.begin() as db:
         result = module.seed(db, datetime.now(timezone.utc))
-        assert result["incidents"] == 14
-        assert result["events"] == 98
-        assert result["timeline"] == 113
+        assert result["incidents"] == 11
+        assert result["events"] == 77
+        assert result["timeline"] == 87
     with SessionLocal.begin() as db:
         before = (db.query(EventRecord).count(), db.query(IncidentRecord).count(), db.query(TimelineEntryRecord).count())
         rerun = module.seed(db, datetime.now(timezone.utc) + timedelta(days=1))

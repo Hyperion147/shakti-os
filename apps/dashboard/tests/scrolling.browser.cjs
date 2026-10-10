@@ -25,8 +25,8 @@ const session = { access_token: jwt, refresh_token: 'isolated-test-refresh', tok
 const incidents = Array.from({ length: 24 }, (_, index) => ({
   id: `scroll-incident-${index}`, type: 'crowd_risk', location: `gate_${index + 1}`,
   status: 'RESPONDING', severity: 'HIGH', confidence: 0.9, risk: 0.75,
-  latitude: index === 0 ? 22.5726 : index === 1 ? 22.4484 : null,
-  longitude: index === 0 ? 88.3639 : index === 1 ? 88.4232 : null,
+  latitude: index === 0 ? 23.3852 : index === 1 ? 23.412 : null,
+  longitude: index === 0 ? 85.318 : index === 1 ? 85.425 : null,
   factors: { crowd_density: 0.8, citizen_report_count: 3 },
   created_at: '2026-09-19T12:00:00Z', updated_at: '2026-09-19T12:03:00Z',
 }));
@@ -182,7 +182,7 @@ async function main() {
       const region = page.getByRole('region', { name: 'Incident situation map' });
       const markers = region.locator('.leaflet-overlay-pane path.leaflet-interactive');
       await markers.nth(1).waitFor({ state: 'attached' });
-      assert.equal(await markers.count(), 2, 'Expected Kolkata and Sonarpur fixture markers');
+      assert.equal(await markers.count(), 2, 'Expected Ranchi fixture markers');
       // Read all rectangles in one frame; scrolling must not skew comparisons.
       const geometry = await region.evaluate((element) => {
         const bounds = element.getBoundingClientRect();
@@ -196,15 +196,15 @@ async function main() {
       for (const marker of geometry.markers) {
         assert(marker.left >= 16 && marker.top >= 16 &&
           marker.right <= geometry.width - 16 && marker.bottom <= geometry.height - 16,
-          `Initial view clips a Kolkata or Sonarpur marker: ${JSON.stringify(geometry)}`);
+          `Initial view clips a Ranchi marker: ${JSON.stringify(geometry)}`);
       }
       return { plottedMarkers: 2, mapWidth: geometry.width, mapHeight: geometry.height };
     };
-    await check('Initial desktop map includes Kolkata and Sonarpur', regionalMapCheck);
+    await check('Initial desktop map includes Ranchi', regionalMapCheck);
     await screenshot('dashboard-desktop');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${dashboardOrigin}/dashboard`);
-    await check('Initial narrow-screen map includes Kolkata and Sonarpur', regionalMapCheck);
+    await check('Initial narrow-screen map includes Ranchi', regionalMapCheck);
     await screenshot('dashboard-mobile');
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${dashboardOrigin}/dashboard`);

@@ -39,8 +39,8 @@ describe("landing page demo data", () => {
     expect(screen.getByText("Demo preview")).toBeInTheDocument();
     expect(screen.getByText("Crowd buildup")).toBeInTheDocument();
     expect(screen.getByText("Operator review started")).toBeInTheDocument();
-    expect(screen.getByText("Kolkata · Puja circuit")).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Demo venue map of Kolkata/ })).toBeInTheDocument();
+    expect(screen.getByText("Ranchi · College circuit")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Demo venue map of Ranchi/ })).toBeInTheDocument();
     const pulse = within(screen.getByRole("region", { name: "Sample system pulse" }));
     expect(pulse.getByText("Sample data")).toBeInTheDocument();
     for (const value of ["12", "03", "128", "08"]) {
@@ -51,6 +51,7 @@ describe("landing page demo data", () => {
     await act(async () => { vi.advanceTimersByTime(90_000); });
     expect(fetchMock).not.toHaveBeenCalled();
     expect(screen.queryByText(/HTTP (unavailable|checking|live)|Loading public overview|Public overview unavailable/i)).not.toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /Open (the )?dashboard|Enter command center/i }).every((link) => link.getAttribute("href") === "/dashboard")).toBe(true);
+    // Landing CTAs are anchors with role="button"; query the exposed role.
+    expect(screen.getAllByRole("button", { name: /Open (the )?dashboard|Enter command center/i }).every((link) => link.getAttribute("href") === "/dashboard")).toBe(true);
   });
 });

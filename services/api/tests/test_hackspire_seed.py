@@ -1,4 +1,4 @@
-"""Hackspire26's five Sonarpur nodes are additive, labelled and repeatable."""
+"""Hackspire26's five Ranchi nodes are additive, labelled and repeatable."""
 import importlib.util
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -13,7 +13,7 @@ from shaktios_api.incident_store import IncidentRecord
 from shaktios_api.timeline_store import TimelineEntryRecord
 from shaktios_api.venue_store import VenueRecord
 
-VENUE_ID = "venue-hackspire26-sonarpur"
+VENUE_ID = "venue-hackspire26-ranchi"
 NOW = datetime(2026, 10, 2, 12, tzinfo=timezone.utc)
 
 
@@ -26,7 +26,7 @@ def seed_module():
     return module
 
 
-def test_five_sonarpur_nodes_have_active_incidents_and_labelled_evidence(client, seed_module):
+def test_five_ranchi_nodes_have_active_incidents_and_labelled_evidence(client, seed_module):
     with SessionLocal.begin() as db:
         result = seed_module.seed(db, NOW, venue_id=VENUE_ID)
         assert result == {"venues": 1, "zones": 5, "incidents": 5, "events": 35, "timeline": 39}
@@ -44,8 +44,8 @@ def test_five_sonarpur_nodes_have_active_incidents_and_labelled_evidence(client,
         assert {item.status for item in incidents} == {"DETECTED", "ASSESSING", "RESPONDING"}
         assert {item.severity for item in incidents} == {"LOW", "MEDIUM", "HIGH"}
         for zone in venue["zones"]:
-            assert 22.43 < zone["latitude"] < 22.47
-            assert 88.40 < zone["longitude"] < 88.44
+            assert 23.30 < zone["latitude"] < 23.50
+            assert 85.25 < zone["longitude"] < 85.50
             incident = db.get(IncidentRecord, seed_module.stable_id(zone["id"]))
             assert (incident.latitude, incident.longitude) == (zone["latitude"], zone["longitude"])
             evidence = db.query(EventRecord).filter(EventRecord.incident_id == incident.id).all()
@@ -75,13 +75,13 @@ def test_new_nodes_preserve_existing_records_and_skip_operator_edited_seed_rows(
         before = {row.id: (row.status, row.risk, row.updated_at) for row in db.query(IncidentRecord).all()}
         legacy_id = str(uuid5(NAMESPACE_URL, "shaktios-seed-v2/techfest_gate_3"))
         assert legacy_id in before
-        assert len(before) == 9
+        assert len(before) == 6
         assert seed_module.seed(db, NOW, venue_id=VENUE_ID)["incidents"] == 5
         assert {key: (db.get(IncidentRecord, key).status, db.get(IncidentRecord, key).risk, db.get(IncidentRecord, key).updated_at) for key in before} == before
         citizen = db.get(EventRecord, "existing-citizen-event")
         assert citizen.reporter_id == "existing-citizen"
         assert citizen.payload == {"description": "Existing observation", "venue_event_id": "venue-test"}
-        example_id = seed_module.stable_id("hackspire26_sonarpur_registration")
+        example_id = seed_module.stable_id("hackspire26_ranchi_registration")
         db.get(IncidentRecord, example_id).status = "RESOLVED"
         db.get(VenueRecord, VENUE_ID).description = "Operator-reviewed venue description"
     with SessionLocal.begin() as db:
@@ -98,6 +98,6 @@ def test_selected_dry_run_and_unknown_venue_do_not_write(seed_module, monkeypatc
     seed_module.main()
     output = capsys.readouterr().out
     assert "5 zones" in output and "35 events" in output and "39 timeline" in output
-    assert seed_module.seed_plan()["zones"] == 14
+    assert seed_module.seed_plan()["zones"] == 11
     with pytest.raises(ValueError, match="Unknown seed venue"):
         seed_module.seed_plan("unknown-venue")

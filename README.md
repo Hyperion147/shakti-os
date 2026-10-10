@@ -113,7 +113,7 @@ services/api/.venv/bin/python scripts/seed_supabase.py --dry-run
 services/api/.venv/bin/python scripts/seed_supabase.py --apply
 ```
 
-On Windows use `services/api/.venv/Scripts/python.exe`. Read the [seed runbook](docs/REAL_DATA.md) before applying; it documents fixture counts, the scoped Sonarpur scenario, rerun behavior and legacy script caveats. See [DEMO.md](docs/DEMO.md) for the actual citizen → operator → citizen-status walkthrough.
+On Windows use `services/api/.venv/Scripts/python.exe`. Read the [seed runbook](docs/REAL_DATA.md) before applying; it documents fixture counts, the scoped Ranchi scenario, rerun behavior and legacy script caveats. See [DEMO.md](docs/DEMO.md) for the actual citizen → operator → citizen-status walkthrough.
 
 ## Checks
 

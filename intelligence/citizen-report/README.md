@@ -6,8 +6,8 @@
 from citizen_report import CitizenReportAdapter
 
 event = CitizenReportAdapter().to_event({
-    "location": "hackspire26_sonarpur_registration",
-    "venue_event_id": "venue-hackspire26-sonarpur",
+    "location": "hackspire26_ranchi_registration",
+    "venue_event_id": "venue-hackspire26-ranchi",
     "description": "Demo observation: queue is blocking the entrance.",
     "category": "crowd",
     "urgency": "high",

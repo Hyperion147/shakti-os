@@ -56,9 +56,9 @@ const previewStats = [
 
 const previewIncidents = [
     {
-        id: "sreebhumi",
+        id: "registration",
         title: "Crowd buildup",
-        location: "Sreebhumi",
+        location: "Registration",
         status: "Assessing",
         risk: 87,
         tone: "bg-warning/10 text-warning",
@@ -66,9 +66,9 @@ const previewIncidents = [
         y: "28%",
     },
     {
-        id: "college-square",
+        id: "hacking-arena",
         title: "Access obstruction",
-        location: "College Square",
+        location: "Hacking Arena",
         status: "Responding",
         risk: 76,
         tone: "bg-warning/10 text-warning",
@@ -76,9 +76,9 @@ const previewIncidents = [
         y: "52%",
     },
     {
-        id: "bagbazar",
+        id: "demo-stage",
         title: "Movement anomaly",
-        location: "Bagbazar",
+        location: "Demo Stage",
         status: "Detected",
         risk: 71,
         tone: "bg-warning/10 text-warning",
@@ -86,9 +86,9 @@ const previewIncidents = [
         y: "24%",
     },
     {
-        id: "ballygunge",
+        id: "campus-shuttle",
         title: "Queue forming",
-        location: "Ballygunge",
+        location: "Campus Shuttle",
         status: "Assessing",
         risk: 35,
         tone: "bg-success/10 text-success",
@@ -100,17 +100,17 @@ const previewIncidents = [
 const previewActivity = [
     {
         title: "Crowd signals correlated",
-        detail: "Sreebhumi · 3 sources",
+        detail: "Registration · 3 sources",
         time: "14:32",
     },
     {
         title: "Operator review started",
-        detail: "College Square · Access",
+        detail: "Hacking Arena · Access",
         time: "14:30",
     },
     {
         title: "Citizen report received",
-        detail: "Ballygunge · Queue",
+        detail: "Campus Shuttle · Queue",
         time: "14:28",
     },
 ];
@@ -183,7 +183,7 @@ function DashboardPreview() {
                                 Command center
                             </p>
                             <p className="text-[8px] text-muted-foreground">
-                                Kolkata · Puja circuit
+                                Ranchi · College circuit
                             </p>
                         </div>
                         <span className="flex items-center gap-1 rounded-sm bg-primary/10 px-2 py-1 text-[8px] font-bold text-primary">
@@ -223,7 +223,7 @@ function DashboardPreview() {
                                             Situation map
                                         </p>
                                         <p className="text-[8px] text-muted-foreground">
-                                            4 zones · Illustrative Kolkata
+                                            5 zones · Illustrative Ranchi
                                             layout
                                         </p>
                                     </div>
@@ -232,7 +232,7 @@ function DashboardPreview() {
                                 <div
                                     className="relative h-[196px] overflow-hidden rounded-lg bg-muted"
                                     role="img"
-                                    aria-label="Demo venue map of Kolkata with sample incidents at Sreebhumi, College Square, Bagbazar and Ballygunge"
+                                    aria-label="Demo venue map of Ranchi with sample incidents at Registration, Hacking Arena, Demo Stage and Campus Shuttle"
                                 >
                                     <div
                                         className="absolute inset-0 opacity-60"

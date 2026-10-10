@@ -43,7 +43,7 @@ export default function MapPage() {
         <div>
           <h1 className="text-2xl font-medium tracking-[-0.03em]">Live Incident Map</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Kolkata and Sonarpur view of incidents and signal locations.
+            Ranchi college-circuit view of incidents and signal locations.
           </p>
         </div>
         <div className="flex items-center gap-2">

@@ -66,13 +66,13 @@ function SidebarBody({
   return (
     <div className="flex h-full flex-col">
       <Link
-        href="/dashboard"
+        href="/"
         onClick={onNavigate}
         className={cn(
           "flex items-center gap-3 px-4 pt-5 pb-4",
           collapsed && "justify-center px-2",
         )}
-        aria-label="ShaktiOS command center"
+        aria-label="ShaktiOS homepage"
       >
         <ShaktiLogo size={36} />
         {!collapsed && (

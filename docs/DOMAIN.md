@@ -29,7 +29,7 @@ For an incoming event, choose the most recently updated eligible incident where:
 
 The window defaults to **300 seconds**, configurable with `INCIDENT_CORRELATION_WINDOW_SECONDS` (minimum one second). If none qualifies, create a new incident. A backdated event does not attach to a newer incident. This is deterministic location/time correlation, not semantic similarity or GPS-radius matching.
 
-Citizen reports must select a registered venue and one of its zone IDs. Machine inputs should use that same canonical ID when they are intended to correlate. A free-text `gate_4` does not match `hackspire26_sonarpur_registration`. Incident coordinates come from the zone registry, not the citizen's optional GPS evidence.
+Citizen reports must select a registered venue and one of its zone IDs. Machine inputs should use that same canonical ID when they are intended to correlate. A free-text `gate_4` does not match `hackspire26_ranchi_registration`. Incident coordinates come from the zone registry, not the citizen's optional GPS evidence.
 
 ## Explainable risk
 

@@ -6,7 +6,7 @@ No real citizen accounts, passwords, contacts, photos, or webhook calls are used
 From shakti-os (after `supabase db push`):
     services/api/.venv/Scripts/python.exe scripts/seed_supabase.py --dry-run
     services/api/.venv/Scripts/python.exe scripts/seed_supabase.py --apply
-    services/api/.venv/Scripts/python.exe scripts/seed_supabase.py --venue venue-hackspire26-sonarpur --apply
+    services/api/.venv/Scripts/python.exe scripts/seed_supabase.py --venue venue-hackspire26-ranchi --apply
 
 The default is dry-run. Existing records are skipped, never truncated. The v2
 batch uses deterministic UUIDs and a single transaction so reruns cannot create
@@ -49,33 +49,19 @@ VENUES = [
         ],
     },
     {
-        "id": "venue-durga-puja-2026",
-        "name": "Kolkata Puja Circuit — Seed Scenario",
-        "description": "Seeded pandal-monitoring scenario. These are illustrative records, not current crowd reports or an official event schedule.",
-        "venue": "Kolkata · Seed Circuit",
-        "location_label": "kol_sreebhumi",
+        "id": "venue-hackspire26-ranchi",
+        "name": "Hackspire26 — Ranchi Seed Scenario",
+        "description": "Demo-only scenario inspired by a Ranchi college-campus event. The five zones and coordinates are illustrative, not an official campus layout, event registration, or live safety report.",
+        "venue": "College circuit, Ranchi · Demo Site",
+        "location_label": "hackspire26_ranchi_registration",
         "status": "active",
         "helpline": None,
         "zones": [
-            ("kol_sreebhumi", "Sreebhumi", 22.6026, 88.4011),
-            ("kol_college_square", "College Square", 22.5737, 88.3650),
-            ("kol_bagbazar", "Bagbazar", 22.6030, 88.3683),
-        ],
-    },
-    {
-        "id": "venue-hackspire26-sonarpur",
-        "name": "Hackspire26 — Sonarpur Seed Scenario",
-        "description": "Demo-only scenario inspired by HackSpire'26 at FIEM, Sonarpur. The five zones and coordinates are illustrative, not an official campus layout, event registration, or live safety report.",
-        "venue": "FIEM area, Sonarpur, Greater Kolkata · Demo Site",
-        "location_label": "hackspire26_sonarpur_registration",
-        "status": "active",
-        "helpline": None,
-        "zones": [
-            ("hackspire26_sonarpur_registration", "Hackspire26 · Registration & Entry", 22.4498, 88.4205),
-            ("hackspire26_sonarpur_hacking_arena", "Hackspire26 · Hacking Arena", 22.4506, 88.4220),
-            ("hackspire26_sonarpur_demo_stage", "Hackspire26 · Judging & Demo Stage", 22.4515, 88.4235),
-            ("hackspire26_sonarpur_food_rest", "Hackspire26 · Food & Rest Zone", 22.4507, 88.4188),
-            ("hackspire26_sonarpur_shuttle", "Hackspire26 · Shuttle Arrival", 22.4484, 88.4232),
+            ("hackspire26_ranchi_registration", "Hackspire26 · Registration & Entry", 23.3852, 85.3180),
+            ("hackspire26_ranchi_hacking_arena", "Hackspire26 · Hacking Arena", 23.3860, 85.3195),
+            ("hackspire26_ranchi_demo_stage", "Hackspire26 · Judging & Demo Stage", 23.4120, 85.4250),
+            ("hackspire26_ranchi_food_rest", "Hackspire26 · Food & Rest Zone", 23.3710, 85.3265),
+            ("hackspire26_ranchi_campus_shuttle", "Hackspire26 · Campus Shuttle", 23.3475, 85.3353),
         ],
     },
 ]
@@ -89,14 +75,11 @@ SCENARIOS = {
     "riverfest_gate_4": (0.88, "RESPONDING"),
     "riverfest_gate_2": (0.51, "ASSESSING"),
     "riverfest_gate_9": (0.21, "DETECTED"),
-    "kol_sreebhumi": (0.91, "RESPONDING"),
-    "kol_college_square": (0.65, "ASSESSING"),
-    "kol_bagbazar": (0.28, "RESOLVED"),
-    "hackspire26_sonarpur_registration": (0.82, "ASSESSING"),
-    "hackspire26_sonarpur_hacking_arena": (0.59, "DETECTED"),
-    "hackspire26_sonarpur_demo_stage": (0.76, "RESPONDING"),
-    "hackspire26_sonarpur_food_rest": (0.31, "ASSESSING"),
-    "hackspire26_sonarpur_shuttle": (0.66, "DETECTED"),
+    "hackspire26_ranchi_registration": (0.82, "ASSESSING"),
+    "hackspire26_ranchi_hacking_arena": (0.59, "DETECTED"),
+    "hackspire26_ranchi_demo_stage": (0.76, "RESPONDING"),
+    "hackspire26_ranchi_food_rest": (0.31, "ASSESSING"),
+    "hackspire26_ranchi_campus_shuttle": (0.66, "DETECTED"),
 }
 TRANSITIONS = {
     "DETECTED": [], "ASSESSING": ["ASSESSING"],
@@ -104,11 +87,11 @@ TRANSITIONS = {
     "RESOLVED": ["ASSESSING", "RESOLVED"],
 }
 HACKSPIRE_DETAILS = {
-    "hackspire26_sonarpur_registration": "arrival queue at the registration and badge-check desks",
-    "hackspire26_sonarpur_hacking_arena": "pedestrian congestion near the team workspace entrance",
-    "hackspire26_sonarpur_demo_stage": "waiting teams near the judging and project-demo area",
-    "hackspire26_sonarpur_food_rest": "a small refreshment queue beside the rest area",
-    "hackspire26_sonarpur_shuttle": "participants waiting at the Sonarpur shuttle arrival point",
+    "hackspire26_ranchi_registration": "arrival queue at the registration and badge-check desks",
+    "hackspire26_ranchi_hacking_arena": "pedestrian congestion near the team workspace entrance",
+    "hackspire26_ranchi_demo_stage": "waiting teams near the judging and project-demo area",
+    "hackspire26_ranchi_food_rest": "a small refreshment queue beside the rest area",
+    "hackspire26_ranchi_campus_shuttle": "participants waiting at the campus shuttle pickup point",
 }
 
 

@@ -160,7 +160,7 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-lg font-medium tracking-[-0.03em]">Live situation map</CardTitle>
-                <p className="mt-1 text-sm text-muted-foreground">Kolkata &amp; Sonarpur · Coordinates from live incidents and venue zones</p>
+                <p className="mt-1 text-sm text-muted-foreground">Ranchi · College circuit · Coordinates from live incidents and venue zones</p>
               </div>
               <Link href="/map" className="inline-flex items-center gap-1 text-xs font-medium text-info hover:underline">
                 Full map <ArrowUpRight className="size-3" aria-hidden />

@@ -8,13 +8,14 @@ from urllib.parse import urlsplit
 import httpx
 
 
-KOLKATA_PANDALS: dict[str, dict[str, object]] = {
-    # Durga Puja 2026 dummy locations (match scripts/kolkata_durga_puja_events.json).
-    "kol_sreebhumi": {"density": 0.94},
-    "kol_santosh_mitra": {"density": 0.89},
-    "kol_bagbazar": {"density": 0.82},
-    "kol_suruchi_sangha": {"density": 0.90},
-    "kol_ekdalia": {"density": 0.84},
+RANCHI_COLLEGE_ZONES: dict[str, dict[str, object]] = {
+    # Hackspire26 Ranchi college-circuit demo locations (match the
+    # venue-hackspire26-ranchi zones in scripts/seed_supabase.py).
+    "hackspire26_ranchi_registration": {"density": 0.82},
+    "hackspire26_ranchi_hacking_arena": {"density": 0.59},
+    "hackspire26_ranchi_demo_stage": {"density": 0.76},
+    "hackspire26_ranchi_food_rest": {"density": 0.31},
+    "hackspire26_ranchi_campus_shuttle": {"density": 0.66},
 }
 
 
@@ -59,7 +60,7 @@ def main() -> None:
     parser.add_argument(
         "--location",
         default="gate_4",
-        help="Event location (e.g. gate_4 or kol_sreebhumi)",
+        help="Event location (e.g. gate_4 or hackspire26_ranchi_registration)",
     )
     parser.add_argument(
         "--density",
@@ -70,8 +71,8 @@ def main() -> None:
     parser.add_argument(
         "--scenario",
         default="",
-        choices=["", "kolkata-ashtami"],
-        help="Preset scenario: 'kolkata-ashtami' sends an Ashtami crush event from Sree Bhumi",
+        choices=["", "ranchi-fest"],
+        help="Preset scenario: 'ranchi-fest' sends a peak registration-crush event from the Ranchi college circuit",
     )
     parser.add_argument(
         "--dry-run",
@@ -81,11 +82,11 @@ def main() -> None:
     args = parser.parse_args()
     location = args.location
     density = args.density
-    if args.scenario == "kolkata-ashtami":
-        location = "kol_sreebhumi"
-        density = 0.94 if density is None else density
+    if args.scenario == "ranchi-fest":
+        location = "hackspire26_ranchi_registration"
+        density = 0.82 if density is None else density
     if density is None:
-        preset = KOLKATA_PANDALS.get(location)
+        preset = RANCHI_COLLEGE_ZONES.get(location)
         density = float(preset["density"]) if preset else 0.42
     try:
         event = build_event(location, density)

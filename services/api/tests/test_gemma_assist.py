@@ -129,7 +129,7 @@ def test_incident_brief(client, provider):
     responses.append(envelope(BRIEF))
     before = counts()
     response = client.post("/assist/incident-brief", json={
-        "location": "hackspire26_sonarpur_registration", "status": "DETECTED",
+        "location": "hackspire26_ranchi_registration", "status": "DETECTED",
         "severity": "MEDIUM", "risk": 0.62, "evidence": ["density 0.8", "one report"],
     }, headers=HEADERS)
     assert response.status_code == 200, response.text

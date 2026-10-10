@@ -37,7 +37,7 @@ INDIA_REGIONS: dict[str, dict[str, Any]] = {
     "Andhra Pradesh": {"lat": 15.9129, "lon": 79.7400, "keywords": ["andhra pradesh", "vijayawada", "visakhapatnam", "vizag", "tirupati"]},
     "Madhya Pradesh": {"lat": 22.9734, "lon": 78.6569, "keywords": ["madhya pradesh", " mp ", "bhopal", "indore", "gwalior", "jabalpur"]},
     "Bihar": {"lat": 25.0961, "lon": 85.3131, "keywords": ["bihar", "patna", "gaya", "muzaffarpur", "bhagalpur"]},
-    "Jharkhand": {"lat": 23.6102, "lon": 85.2799, "keywords": ["jharkhand", "ranchi", "jamshedpur", "dhanbad"]},
+    "Jharkhand": {"lat": 23.6102, "lon": 85.2799, "keywords": ["jharkhand", "ranchi", "morabadi", "mesra", "dhanbad", "bokaro", "jamshedpur"]},
     "Odisha": {"lat": 20.9517, "lon": 85.0985, "keywords": ["odisha", "orissa", "bhubaneswar", "cuttack", "rourkela"]},
     "Chhattisgarh": {"lat": 21.2787, "lon": 81.8661, "keywords": ["chhattisgarh", "raipur", "bilaspur", "bastar"]},
     "Jammu & Kashmir": {"lat": 33.7782, "lon": 76.5762, "keywords": ["jammu", "kashmir", "srinagar", "j&k", "leh", "ladakh"]},
@@ -228,13 +228,13 @@ def compute_trend_velocity(posts: list[dict[str, Any]]) -> list[dict[str, Any]]:
 # ---------------------------------------------------------------------------
 
 _SAMPLE_USERS = [
-    {"id": "usr_crowd_watcher", "username": "crowd_watcher", "bio": "Event Security Analyst | Delhi NCR"},
-    {"id": "usr_local_news", "username": "local_news_hub", "bio": "Regional News Aggregator | Mumbai"},
-    {"id": "usr_student_eye", "username": "student_eye_witness", "bio": "College Student | Bengaluru"},
-    {"id": "usr_safety_first", "username": "safety_first_org", "bio": "Community Safety Volunteer | Gate 4"},
+    {"id": "usr_crowd_watcher", "username": "crowd_watcher", "bio": "Event Security Analyst | Ranchi"},
+    {"id": "usr_local_news", "username": "local_news_hub", "bio": "Regional News Aggregator | Jharkhand"},
+    {"id": "usr_student_eye", "username": "student_eye_witness", "bio": "College Student | BIT Mesra, Ranchi"},
+    {"id": "usr_safety_first", "username": "safety_first_org", "bio": "Community Safety Volunteer | Morabadi"},
     {"id": "usr_social_feed", "username": "social_feed_bot", "bio": "Automated Social Aggregator | India"},
-    {"id": "usr_puja_hopper", "username": "puja_hopper_kol", "bio": "Pandal hopper | Kolkata, West Bengal"},
-    {"id": "usr_bagbazar_para", "username": "bagbazar_para", "bio": "Para resident | Bagbazar, Kolkata"},
+    {"id": "usr_campus_exec", "username": "campus_exec_rnc", "bio": "Fest Coordinator | St. Xavier's, Ranchi"},
+    {"id": "usr_morabadi_local", "username": "morabadi_local", "bio": "Resident | Morabadi, Ranchi"},
 ]
 
 _SAMPLE_TEXTS_NEGATIVE = [
@@ -245,11 +245,11 @@ _SAMPLE_TEXTS_NEGATIVE = [
     "Gate 4 area completely blocked. No movement possible. Very tense atmosphere. #CrowdControl",
     "Reports of stampede-like situation near Gate 4. Need immediate intervention. #Emergency",
     "Police struggling to maintain order at Gate 4. Crowd density critical. #Breaking",
-    # Kolkata Durga Puja moments (Ashtami/Saptami/Navami 2026 dummy data).
-    "Ashtami night e Sree Bhumi te prochondo bhir — VIP Road obdhi line! #SreebhumiCrowd #DurgaPuja",
-    "Santosh Mitra Square Vande Mataram theme e record footfall, entry rerouted from Sealdah side. #KolkataPuja",
-    "College Square lake er reflection dekhte giye atke gelam — huge crowd but beautiful. #PandalHopping",
-    "Deshapriya Park e barricade crush — police staggered entry korche. #AshtamiCrowd",
+    # Ranchi college-circuit moments (demo data).
+    "Registration queue at Morabadi campus gate spilling onto the main road — badges taking forever! #RanchiFest #Crowd",
+    "BIT Mesra demo stage footfall record, entry rerouted from the hostel side. #CampusFest",
+    "Stuck near St. Xavier's food court — huge crowd but great vibe. #CollegeFest",
+    "Shuttle pickup chaos at the station point — pushing and long waits. #RanchiCrowd",
 ]
 
 _SAMPLE_TEXTS_NEUTRAL = [
@@ -257,14 +257,14 @@ _SAMPLE_TEXTS_NEUTRAL = [
     "Gate 4 entrance busy but orderly so far. Event starting soon. #LiveUpdates",
     "Crowd building up at Gate 4. Standard event-day congestion. #Gate4",
     "People arriving steadily at Gate 4. Queue management in progress. #EventLogistics",
-    "Saptami afternoon at Chetla Agrani — calm window 1-4pm, manageable queues. #DurgaPuja2026",
+    "Large evening crowd at the Morabadi campus fest — calm window 1-4pm, manageable queues. #CollegeFest2026",
 ]
 
 _SAMPLE_TEXTS_POSITIVE = [
     "Great atmosphere at Gate 4! Crowd is excited and well-managed. #EventSuccess",
     "Smooth entry through Gate 4. Excellent crowd management today. #Positive",
-    "Everyone in high spirits at Gate 4. Beautiful event vibes! #Community",
-    "Bagbazar Sarbojanin er classical pratima — 1919 er oitijhyo, pushpanjali shesh. Shubho Ashtami! #DurgaPuja",
+    "Demo stage showcase was brilliant — well-managed crowd at BIT Mesra. #CampusFest",
+    "Open-air judging session wrapped on time, orderly exits. Shubh Sandhya Ranchi! #CollegeFest",
 ]
 
 _HEADLINES = [
@@ -273,7 +273,7 @@ _HEADLINES = [
     "Gate 4 Area Experiences Heavy Foot Traffic",
     "Event Organizers Monitor Gate 4 Crowd Density",
     "Social Media Reports of Crowding at Gate 4",
-    "Ashtami Evening Crush at Sree Bhumi as Queue Spills onto VIP Road",
+    "Registration Crush at Morabadi Campus Gate as Queue Spills onto Main Road",
 ]
 
 
@@ -374,8 +374,8 @@ def build_social_signal(
     # Trend status
     trend_status = top_trend["status"] if top_trend else "stable"
 
-    # Headline — prefer the Kolkata pandal headline for kol_* locations.
-    if location.startswith("kol_") and len(_HEADLINES) > 1:
+    # Headline — prefer the campus-fest headline for Ranchi college-circuit locations.
+    if location.startswith(("ranchi_", "hackspire26_ranchi_")) and len(_HEADLINES) > 1:
         headline = _HEADLINES[-1]
     else:
         headline = _HEADLINES[0] if _HEADLINES else None

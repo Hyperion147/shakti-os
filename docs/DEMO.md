@@ -7,7 +7,7 @@ Goal: show **one citizen observation → one persisted incident → an operator 
 1. Follow the [README](../README.md) to configure/start FastAPI and the dashboard. Point the sibling citizen app at the same API/Supabase project. For a device, use a reachable host rather than the device's `localhost`.
 2. Apply migrations and, if needed, review/apply the labelled [demo seed](REAL_DATA.md). Do not reset a shared database or seed into an unknown project.
 3. Sign in as a specifically authorized operator. `/me` must return `is_operator: true`; a normal citizen must not gain operator access.
-4. Sign in on mobile as a citizen. Select a backend-registered venue/zone. The example below uses **Hackspire26 — Sonarpur Seed Scenario**, zone **Registration & Entry**.
+4. Sign in on mobile as a citizen. Select a backend-registered venue/zone. The example below uses **Hackspire26 — Ranchi Seed Scenario**, zone **Registration & Entry**.
 5. Rehearse camera/microphone/GPS permissions on the target device. Manual venue ID joining and a manual report remain useful fallbacks. Do not rely on automatic external deep-link joining without a separate test.
 6. If showing n8n, configure a controlled test destination using its [runbook](../n8n/README.md). The imported workflow only validates/acknowledges. Never connect a presentation to real emergency channels.
 
@@ -17,13 +17,13 @@ Keep tokens, environment files, personal account details and unrelated reports o
 
 Old seed incidents and the crowd simulator's generic `gate_4` do **not** automatically merge with a registered zone report. Correlation needs the exact same zone ID and eligible timestamps (default window: five minutes).
 
-The following POSIX-shell example posts three explicitly synthetic signals to the **local development API**. Run only when those stored demo writes are intended and the Sonarpur venue/zone is registered:
+The following POSIX-shell example posts three explicitly synthetic signals to the **local development API**. Run only when those stored demo writes are intended and the Ranchi venue/zone is registered:
 
 ```bash
 for signal in \
-  '{"type":"crowd_density","source":"demo_crowd_sensor","location":"hackspire26_sonarpur_registration","confidence":0.9,"payload":{"density":0.8,"is_demo":true}}' \
-  '{"type":"social_concern","source":"demo_social_signal","location":"hackspire26_sonarpur_registration","confidence":0.9,"payload":{"velocity":0.6,"is_demo":true}}' \
-  '{"type":"abnormal_movement","source":"demo_movement_sensor","location":"hackspire26_sonarpur_registration","confidence":0.9,"payload":{"score":0.5,"is_demo":true}}'
+  '{"type":"crowd_density","source":"demo_crowd_sensor","location":"hackspire26_ranchi_registration","confidence":0.9,"payload":{"density":0.8,"is_demo":true}}' \
+  '{"type":"social_concern","source":"demo_social_signal","location":"hackspire26_ranchi_registration","confidence":0.9,"payload":{"velocity":0.6,"is_demo":true}}' \
+  '{"type":"abnormal_movement","source":"demo_movement_sensor","location":"hackspire26_ranchi_registration","confidence":0.9,"payload":{"score":0.5,"is_demo":true}}'
 do
   curl --fail-with-body --silent --show-error \
     http://localhost:8000/events \

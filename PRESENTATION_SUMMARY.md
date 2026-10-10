@@ -46,7 +46,7 @@ An **Event** is evidence; an **Incident** groups relevant evidence; **Risk** exp
 5. **Show the action boundary honestly.** Approval can request an n8n workflow; the supplied workflow validates and acknowledges, with no notification-provider or responder-dispatch node.
 6. **Close on the timeline.** Evidence, decisions and accepted requests form a traceable account of the scenario.
 
-The [demo walkthrough](docs/DEMO.md) contains preflight, fresh multi-source inputs, timing, ownership checks and fallback steps. The [seed runbook](docs/REAL_DATA.md) explains the labelled Hackspire26/Sonarpur fixtures; those are illustrative, not live conditions or an official campus plan.
+The [demo walkthrough](docs/DEMO.md) contains preflight, fresh multi-source inputs, timing, ownership checks and fallback steps. The [seed runbook](docs/REAL_DATA.md) explains the labelled Hackspire26/Ranchi fixtures; those are illustrative, not live conditions or an official campus plan.
 
 ## Claims to make carefully
 

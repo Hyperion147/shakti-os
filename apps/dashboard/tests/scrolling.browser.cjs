@@ -5,12 +5,10 @@
  *   node tests/scrolling.browser.cjs [playwright-module] [chromium-executable] [dashboard-origin] [screenshot-dir]
  * Optional screenshot-dir saves fixture-only screenshots; use a temporary folder.
  */
-/* global __dirname */
+/* Node provides __dirname, process and Buffer as globals; do not redeclare them. */
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const { mkdirSync } = require('node:fs');
-const process = require('node:process');
-const { Buffer } = require('node:buffer');
 const { chromium } = require(process.argv[2] || 'playwright');
 // Pass synthetic NEXT_PUBLIC_* values matching the test server explicitly.
 // Never load a private dotenv file or use a real stored browser session.

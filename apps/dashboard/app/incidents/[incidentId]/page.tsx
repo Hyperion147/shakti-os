@@ -62,6 +62,14 @@ import {
     riskPercent,
 } from "@/lib/format";
 
+/** Operator WebSocket frame for incident updates. Hoisted to module scope so the
+ * exhaustive-deps rule does not mistake the payload's `incident` key for the
+ * component's `incident` state inside the subscription effect. */
+type IncidentUpdateFrame = {
+    type: string;
+    incident: Incident;
+};
+
 /** Backend-provided evidence text. Never invents content: only payload fields. */
 function evidenceDetail(event: Event): { text: string; meta: string } {
     const payload = event.payload as Record<string, unknown>;
@@ -162,10 +170,7 @@ function IncidentDetailView({ incidentId }: { incidentId: string }) {
             accessToken,
             (data) => {
                 try {
-                    const update = JSON.parse(data) as {
-                        type: string;
-                        incident: Incident;
-                    };
+                    const update = JSON.parse(data) as IncidentUpdateFrame;
                     if (
                         update.type === "incident.updated" &&
                         update.incident?.id === incidentId

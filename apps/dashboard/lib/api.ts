@@ -3,7 +3,10 @@ import type {
   CameraDetectionInput,
   Event,
   EventInput,
+  GemmaConfig,
   Incident,
+  IncidentBrief,
+  IncidentBriefRequest,
   Integrations,
   Me,
   PublicOverview,
@@ -18,9 +21,14 @@ export type {
   CameraDetectionInput,
   Event,
   EventInput,
+  GemmaConfig,
   Incident,
+  IncidentBrief,
+  IncidentBriefRequest,
   Integrations,
   Me,
+  PhotoTriageRequest,
+  PhotoTriageResponse,
   PublicOverview,
   TimelineEntry,
   Venue,
@@ -163,5 +171,22 @@ export async function requestIncidentAction(
     body: JSON.stringify({ type, note }),
   });
   if (!response.ok) await throwForStatus(response, "Action request failed");
+  return response.json();
+}
+
+/** Gemma 4 assistance. Ephemeral drafts only: never stores reports or edits incidents. */
+export async function getAssistConfig(): Promise<GemmaConfig> {
+  const response = await apiFetch(`${apiUrl}/assist/config`);
+  if (!response.ok) await throwForStatus(response, "Assist config request failed");
+  return response.json();
+}
+
+export async function requestIncidentBrief(body: IncidentBriefRequest): Promise<IncidentBrief> {
+  const response = await apiFetch(`${apiUrl}/assist/incident-brief`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) await throwForStatus(response, "Gemma brief request failed");
   return response.json();
 }

@@ -41,13 +41,16 @@ import { TimelineView } from "@/components/dashboard/timeline-view";
 import { EmptyState } from "@/components/dashboard/states";
 import {
     getIncident,
+    getAssistConfig,
     getIntegrations,
     getTimeline,
     requestIncidentAction,
+    requestIncidentBrief,
     updateIncidentStatus,
     websocketUrl,
     type Event,
     type Incident,
+    type IncidentBrief,
     type Integrations,
     type TimelineEntry,
 } from "@/lib/api";
@@ -115,6 +118,10 @@ function IncidentDetailView({ incidentId }: { incidentId: string }) {
     const [connection, setConnection] = useState<ConnectionState>("CONNECTING");
     const [integrations, setIntegrations] = useState<Integrations | null>(null);
     const [integrationError, setIntegrationError] = useState(false);
+    const [brief, setBrief] = useState<IncidentBrief | null>(null);
+    const [briefLoading, setBriefLoading] = useState(false);
+    const [briefError, setBriefError] = useState<string | null>(null);
+    const [assistReady, setAssistReady] = useState<boolean | null>(null);
 
     const {
         events,
@@ -122,6 +129,20 @@ function IncidentDetailView({ incidentId }: { incidentId: string }) {
         error: eventsError,
         reload: reloadEvents,
     } = useIncidentEvents(incidentId);
+
+    useEffect(() => {
+        let cancelled = false;
+        getAssistConfig()
+            .then((value) => {
+                if (!cancelled) setAssistReady(value.configured);
+            })
+            .catch(() => {
+                if (!cancelled) setAssistReady(false);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     useEffect(() => {
         if (!incidentId) return;
@@ -258,6 +279,33 @@ function IncidentDetailView({ incidentId }: { incidentId: string }) {
             );
         } finally {
             mutationPending.current = false;
+        }
+    };
+
+    const summarizeWithGemma = async () => {
+        if (!incident || briefLoading) return;
+        setBriefLoading(true);
+        setBriefError(null);
+        try {
+            const evidence = events.slice(0, 10).map((item) => {
+                const detail = evidenceDetail(item);
+                return `${item.type} via ${item.source}: ${detail.text}${detail.meta ? ` (${detail.meta})` : ""}`;
+            });
+            setBrief(
+                await requestIncidentBrief({
+                    location: incident.location,
+                    status: incident.status,
+                    severity: incident.severity,
+                    risk: incident.risk,
+                    evidence,
+                }),
+            );
+        } catch (err) {
+            setBriefError(
+                err instanceof Error ? err.message : "Gemma brief request failed.",
+            );
+        } finally {
+            setBriefLoading(false);
         }
     };
 
@@ -445,6 +493,70 @@ function IncidentDetailView({ incidentId }: { incidentId: string }) {
                         </Card>
                         <RiskFactors factors={incident.factors} />
                     </section>
+
+                    <Card className="mt-4 rounded-xl bg-card py-0 ring-0">
+                        <CardHeader className="px-6 pt-6 pb-0">
+                            <CardTitle className="text-lg font-medium">
+                                Gemma brief
+                            </CardTitle>
+                            <p className="mt-1 text-sm text-muted-foreground">
+                                Open-weights summary of the evidence above. Read-only: it never
+                                edits the incident or requests action.
+                            </p>
+                        </CardHeader>
+                        <CardContent className="p-6">
+                            {assistReady === false && (
+                                <p className="text-sm text-muted-foreground" role="status">
+                                    Gemma assist is not configured for this API.
+                                </p>
+                            )}
+                            {assistReady !== false && (
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <Button
+                                        className="rounded-lg font-medium"
+                                        disabled={briefLoading}
+                                        onClick={summarizeWithGemma}
+                                    >
+                                        {briefLoading
+                                            ? "Summarizing…"
+                                            : brief
+                                              ? "Regenerate brief"
+                                              : "Summarize with Gemma"}
+                                    </Button>
+                                </div>
+                            )}
+                            {briefError && (
+                                <p className="mt-3 text-sm text-destructive" role="alert">
+                                    {briefError}
+                                </p>
+                            )}
+                            {brief && (
+                                <div className="mt-4 space-y-3">
+                                    <p className="text-sm leading-7">{brief.brief}</p>
+                                    <ul className="space-y-1.5 text-sm text-muted-foreground">
+                                        {brief.bullets.map((bullet) => (
+                                            <li key={bullet}>· {bullet}</li>
+                                        ))}
+                                    </ul>
+                                    {brief.suggested_actions.length > 0 && (
+                                        <div>
+                                            <p className="text-sm font-medium">
+                                                Suggested next reviews
+                                            </p>
+                                            <ul className="mt-1.5 space-y-1.5 text-sm text-muted-foreground">
+                                                {brief.suggested_actions.map((action) => (
+                                                    <li key={action}>· {action}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                    <p className="font-mono text-[11px] text-muted-foreground">
+                                        Model {brief.model}
+                                    </p>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
 
                     <section className="mt-4 grid gap-4 lg:grid-cols-2">
                         <Card className="rounded-xl bg-card py-0 ring-0">
